@@ -1,0 +1,6 @@
+# binaries for programs and libraries
+/target/
+**/*.rs.bk
+
+# test results
+/tests/test*.rs
