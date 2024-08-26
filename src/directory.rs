@@ -4,9 +4,11 @@ use std::io::Error;
 use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 
+use crate::text_fmt::color_path;
+
 type DirectoryBody = HashMap<PathBuf, Vec<PathBuf>>;
 
-const WALL: &str = "│   ";
+const WALL: &str = "│   ";
 const MIDDLE_CHILD: &str = "├── ";
 const LAST_CHILD: &str = "└── ";
 const SPACE: &str = "    ";
@@ -80,7 +82,7 @@ impl Directory {
             }
         }
         print!("{}", pos);
-        print!("{}", cur.file_name().unwrap().to_str().unwrap());
+        print!("{}", color_path(cur));
 
         // update wall list for next call (add to stack)
         wall_list.push(pos != LAST_CHILD);

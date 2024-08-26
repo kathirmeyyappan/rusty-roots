@@ -1,6 +1,7 @@
 mod directory;
+mod text_fmt;
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use clap::{Arg, Command};
 use directory::Directory;
@@ -19,7 +20,7 @@ fn main() {
     let input_path = matches.get_one::<String>("path");
     let target_path = match input_path {
         Some(s) => Path::new(s),
-        None => Path::new(""),
+        None => Path::new("."),
     };
 
     let dir = Directory::new(target_path).unwrap();
