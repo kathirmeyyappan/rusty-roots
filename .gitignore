@@ -4,3 +4,6 @@
 
 # test results
 /tests/test*.rs
+
+# other stuff
+.vscode
