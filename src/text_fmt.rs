@@ -3,6 +3,7 @@ use std::path::Path;
 use colored::{ColoredString, Colorize};
 use clap::builder::OsStr;
 use mime_guess::MimeGuess;
+use mime::{TEXT, IMAGE, AUDIO, VIDEO, APPLICATION};
 
 
 pub fn color_path(p: &Path) -> ColoredString {
@@ -15,8 +16,19 @@ pub fn color_path(p: &Path) -> ColoredString {
     let filetype = MimeGuess::from_path(p).first();
 
     match filetype {
-        Some(mime) if mime.type_() == "image" => name.bright_magenta(),
-        Some(mime) if mime.type_() == "application" => name.bright_green(),
-        _ => name.normal()
+        Some(mime) => match mime.type_() {
+            TEXT => name.yellow(),
+            IMAGE => name.bright_magenta(),
+            AUDIO => name.cyan(),
+            VIDEO => name.red(),
+            APPLICATION => match mime.subtype().as_str() {
+                "json" => name.yellow(),
+                "pdf" => name.bright_magenta(),
+                "zip" => name.bright_green(),
+                _ => name.bright_green(),
+            },
+            _ => name.normal(),
+        },
+        None => name.normal(),
     }
 }

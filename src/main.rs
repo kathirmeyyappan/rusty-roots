@@ -1,10 +1,7 @@
-mod directory;
-mod text_fmt;
-
 use std::path::Path;
 
 use clap::{Arg, Command};
-use directory::Directory;
+use rusty_roots::directory::Directory;
 
 fn main() {
     let matches = Command::new("rusty-roots")
