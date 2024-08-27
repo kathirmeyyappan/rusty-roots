@@ -1,10 +1,9 @@
 use std::path::Path;
 
-use colored::{ColoredString, Colorize};
 use clap::builder::OsStr;
+use colored::{ColoredString, Colorize};
+use mime::{APPLICATION, AUDIO, IMAGE, TEXT, VIDEO};
 use mime_guess::MimeGuess;
-use mime::{TEXT, IMAGE, AUDIO, VIDEO, APPLICATION};
-
 
 pub fn color_path(p: &Path) -> ColoredString {
     let cur_dir = OsStr::from(".");
@@ -12,7 +11,7 @@ pub fn color_path(p: &Path) -> ColoredString {
     let name = name.to_str().unwrap();
     if p.is_dir() {
         return name.blue().bold();
-    } 
+    }
     let filetype = MimeGuess::from_path(p).first();
 
     match filetype {
@@ -24,7 +23,7 @@ pub fn color_path(p: &Path) -> ColoredString {
             APPLICATION => match mime.subtype().as_str() {
                 "json" => name.yellow(),
                 "pdf" => name.bright_magenta(),
-                "zip" => name.bright_green(),
+                "zip" => name.bright_green().bold(),
                 _ => name.bright_green(),
             },
             _ => name.normal(),

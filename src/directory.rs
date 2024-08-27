@@ -4,6 +4,9 @@ use std::io::Error;
 use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 
+use globset::GlobSet;
+
+use crate::ignore::load_ignore_patterns;
 use crate::text_fmt::color_path;
 
 type DirectoryBody = HashMap<PathBuf, Vec<PathBuf>>;
@@ -20,17 +23,22 @@ pub struct Directory {
 }
 
 impl Directory {
-    pub fn new(root: &Path) -> Result<Self, Error> {
+    pub fn new(root: &Path, ignore: bool) -> Result<Self, Error> {
         let mut res = Self {
             root: root.to_path_buf(),
             body: HashMap::new(),
         };
-        res.walk_dir(root)?;
+        let ignore_patterns = if ignore {
+            load_ignore_patterns(root.to_path_buf())?
+        } else {
+            GlobSet::empty()
+        };
+        res.walk_dir(root, &ignore_patterns)?;
         Ok(res)
     }
 
-    /// populates the Directory object by recursively walking filepaths
-    fn walk_dir(&mut self, from: &Path) -> Result<(), Error> {
+    /// Populates the Directory object by recursively walking filepaths
+    fn walk_dir(&mut self, from: &Path, ignore_patterns: &GlobSet) -> Result<(), Error> {
         if !from.to_path_buf().is_dir() {
             let err_msg = format!("{} is not a directory", from.display());
             return Err(Error::new(ErrorKind::InvalidInput, err_msg));
@@ -40,29 +48,32 @@ impl Directory {
             let entry = entry?;
             let path = entry.path();
             // add info to directory body
-            match self.body.get_mut(from) {
-                Some(v) => v.push(path.clone()),
-                None => {
-                    self.body.insert(from.to_path_buf(), vec![path.clone()]);
+            // let trimmed_path = path.to_str().unwrap().trim_start_matches("./");
+            if !ignore_patterns.is_match(&path) {
+                match self.body.get_mut(from) {
+                    Some(v) => v.push(path.clone()),
+                    None => {
+                        self.body.insert(from.to_path_buf(), vec![path.clone()]);
+                    }
                 }
-            }
-            // dfs if path is directory
-            if path.is_dir() {
-                self.walk_dir(&path)?;
+                // dfs if path is directory
+                if path.is_dir() {
+                    self.walk_dir(&path, ignore_patterns)?;
+                }
             }
         }
         return Ok(());
     }
 
-    /// wrapper function to print Directory body's structure.
+    /// Wrapper function to print Directory body's structure.
     pub fn print_body(&self) -> Result<(), Error> {
         self.print_dir(None, &mut Vec::new(), None)?;
         println!();
         Ok(())
     }
 
-    /// takes a dfs approach to printing the directory structure.
-    /// for each iteration, prints only the parents in the current path.
+    /// Takes a dfs approach to printing the directory structure.
+    /// For each iteration we print the current path, then alphabetically print children.
     fn print_dir(
         &self,
         cur: Option<&Path>,

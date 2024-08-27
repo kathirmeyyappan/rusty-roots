@@ -1,0 +1,24 @@
+# .RRIGNORE FILE
+# This is a file to specify paths to ignore when using rusty-roots!!
+# It works similar to .gitignore, but is a bit stricter and follows Glob patterns.
+
+# note: Running with this .rrignore file will effectively ignore everything.
+# Remove some glob patterns here to actually get an output when using the --ignore flag.
+
+# ignore this file
+./.rrignore
+
+# ignore any directory with name target
+**/target
+
+# ignore specific directory
+./target/release
+
+# ignore Rust file types anywhere
+**/*.rs
+
+# ignore json file types within specific directory
+.target/debug/*.json
+
+# ignore .* files
+**/.*
