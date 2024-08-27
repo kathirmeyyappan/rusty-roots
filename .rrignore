@@ -8,7 +8,7 @@
 # ignore this file
 ./.rrignore
 
-# ignore any directory with name target
+# ignore any directory with name 'target'
 **/target
 
 # ignore specific directory
@@ -20,5 +20,5 @@
 # ignore json file types within specific directory
 .target/debug/*.json
 
-# ignore .* files
+# ignore files that start with '.'
 **/.*
