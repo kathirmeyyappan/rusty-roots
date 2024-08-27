@@ -1,6 +1,6 @@
 [package]
 name = "rusty-roots"
-version = "1.0.0"
+version = "0.2.0"
 edition = "2021"
 description = "A Rust CLI tool that replicates the Unix 'tree' command with enhanced features."
 license = "MIT"

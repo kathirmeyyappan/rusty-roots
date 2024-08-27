@@ -10,10 +10,7 @@ https://github.com/user-attachments/assets/9689ad2f-937b-4b58-a9a9-217c85ccd2e3
 
 ## Installation
 ### Prerequisites
-1. Ensure Rust is installed. You can install it with:
-```
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-```
+1. Ensure Rust is installed. Visit: https://www.rust-lang.org/tools/install.
 ### Steps
 1. Install rusty-roots:
 ```
