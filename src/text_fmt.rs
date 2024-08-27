@@ -39,8 +39,8 @@ pub fn color_branch(branch_str: &str, color: bool, d: u8, max_d: u8) -> ColoredS
     if !color {
         return branch_str.normal();
     }
-    let (max_r, max_g, max_b) = (255_u8, 120_u8, 0_u8);
-    let (min_r, min_g, min_b) = (255_u8, 255_u8, 255_u8);
+    let (max_r, max_g, max_b) = (255_u8, 255_u8, 255_u8);
+    let (min_r, min_g, min_b) = (255_u8, 120_u8, 0_u8);
     // println!("{}, {}", d, max_d);
     let (r, g, b) = (
         ((min_r as f32 * d as f32 + max_r as f32 * (max_d - d) as f32) / max_d as f32) as u8,
