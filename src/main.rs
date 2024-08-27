@@ -12,7 +12,7 @@ fn main() {
                 .short('p')
                 .long("path")
                 .value_name("PATH")
-                .help("Path to get tree from")
+                .help("Path to get tree from"),
         )
         .arg(
             Arg::new("ignore")
@@ -21,15 +21,22 @@ fn main() {
                 .action(clap::ArgAction::SetTrue)
                 .help("Ignore files and directories as specified in {$path}/.rrignore"),
         )
+        .arg(
+            Arg::new("no-color")
+                .long("no-color")
+                .action(clap::ArgAction::SetTrue)
+                .help("Do not stylize tree text output"),
+        )
         .get_matches();
 
     let input_path = matches.get_one::<String>("path");
     let ignore = matches.get_flag("ignore");
+    let color = !matches.get_flag("no-color");
     let target_path = match input_path {
         Some(s) => Path::new(s),
         None => Path::new("."),
     };
 
     let dir = Directory::new(target_path, ignore).unwrap();
-    dir.print_body().unwrap();
+    dir.print_body(color).unwrap();
 }
