@@ -2,8 +2,14 @@
 name = "rusty-roots"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "A Rust CLI tool that replicates the Unix 'tree' command with enhanced features."
+license = "MIT"
+repository = "https://github.com/kathirmeyyappan/rusty-roots"
+homepage = "https://github.com/kathirmeyyappan/rusty-roots"
+documentation = "https://github.com/kathirmeyyappan/rusty-roots/blob/main/README.md"
+readme = "README.md"
+keywords = ["CLI", "filesystem", "tree", "rust"]
+categories = ["command-line-utilities", "filesystem"]
 
 [dependencies]
 clap = "4.0"
