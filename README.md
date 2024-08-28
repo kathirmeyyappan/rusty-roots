@@ -40,3 +40,5 @@ Options:
   -h, --help            Print help
   -V, --version         Print version
 ```
+
+*tip: If the program seems to be hanging because the called directory is extremely large, try running with `--no-color`. Pre-calculation for the branch color gradient is not done when this flag is called, so the program will print the tree on-the-fly.* 
