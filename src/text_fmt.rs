@@ -1,17 +1,15 @@
 use std::path::Path;
 
-use clap::builder::OsStr;
 use colored::{ColoredString, Colorize, CustomColor};
 use mime::{APPLICATION, AUDIO, IMAGE, TEXT, VIDEO};
 use mime_guess::MimeGuess;
 
-pub fn color_path(p: &Path, color: bool) -> ColoredString {
-    let cur_dir = OsStr::from(".");
-    let name = p.file_name().unwrap_or(&cur_dir);
-    let name = name.to_str().unwrap();
-    if !color {
-        return name.normal();
-    }
+pub fn get_path_end(p: &Path) -> &str {
+    p.file_name().and_then(|name| name.to_str()).unwrap_or(".")
+}
+
+pub fn color_path(p: &Path) -> ColoredString {
+    let name = get_path_end(p);
     if p.is_dir() {
         return name.blue().bold();
     }
@@ -35,10 +33,7 @@ pub fn color_path(p: &Path, color: bool) -> ColoredString {
     }
 }
 
-pub fn color_branch(branch_str: &str, color: bool, d: u8, max_d: u8) -> ColoredString {
-    if !color {
-        return branch_str.normal();
-    }
+pub fn color_branch(branch_str: &str, d: u8, max_d: u8) -> ColoredString {
     let (max_r, max_g, max_b) = (255_u8, 255_u8, 255_u8);
     let (min_r, min_g, min_b) = (255_u8, 120_u8, 0_u8);
     // println!("{}, {}", d, max_d);
