@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# testing no flags vs --no-color (fast print) outputs
+
 # vars
 test_dir="test_tree"
 test_output_dir="outs"
@@ -33,15 +35,11 @@ touch $test_dir/subdir4/subsubdir7/file16.txt
 
 # run expected and observed
 mkdir $test_output_dir
-tree $test_dir > $test_output_dir/tree_output.txt
-../target/release/rusty-roots -p $test_dir > $test_output_dir/rusty_roots_output.txt
-
-# adjust files for stylistic differences
-sed '1d; s/^.\{4\}//' $test_output_dir/rusty_roots_output.txt > $test_output_dir/adjusted_rusty_roots_output.txt
-head -n -2 $test_output_dir/tree_output.txt > $test_output_dir/adjusted_tree_output.txt
+../target/release/rusty-roots -p $test_dir > $test_output_dir/og_output.txt
+../target/release/rusty-roots --no-color -p $test_dir > $test_output_dir/no_color_output.txt
 
 # compare
-diff $test_output_dir/adjusted_tree_output.txt $test_output_dir/adjusted_rusty_roots_output.txt
+diff $test_output_dir/og_output.txt $test_output_dir/no_color_output.txt
 
 # clean up
 cleanup() {
