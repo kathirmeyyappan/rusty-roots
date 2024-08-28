@@ -1,10 +1,5 @@
 #!/bin/bash
 
-cleanup() {
-    rm -rf $1
-    rm -f rusty_roots_output.txt tree_output.txt
-}
-
 # vars
 test_dir="test_tree"
 test_output_dir="outs"
@@ -29,6 +24,10 @@ head -n -2 $test_output_dir/tree_output.txt > $test_output_dir/adjusted_tree_out
 diff $test_output_dir/adjusted_tree_output.txt $test_output_dir/adjusted_rusty_roots_output.txt
 
 # clean up
+cleanup() {
+    rm -rf $1
+}
+
 cleanup "$test_dir"
 cleanup "$test_output_dir"
 cargo clean

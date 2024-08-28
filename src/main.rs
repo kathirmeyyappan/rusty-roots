@@ -37,6 +37,11 @@ fn main() {
         None => Path::new("."),
     };
 
-    let dir = Directory::new(target_path, ignore).unwrap();
-    dir.print_body(color).unwrap();
+    if color {
+        let dir = Directory::new(target_path, ignore).unwrap();
+        dir.print_body().unwrap();
+    } else {
+        let dir = Directory::new_with_empty_body(target_path, ignore).unwrap();
+        dir.fast_print_body().unwrap();
+    }
 }
