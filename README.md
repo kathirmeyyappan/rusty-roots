@@ -1,4 +1,9 @@
-# rusty-roots
+# [rusty-roots](https://crates.io/crates/rusty-roots)
+![crates.io](https://img.shields.io/crates/v/rusty-roots.svg)
+![](https://img.shields.io/crates/d/rusty-roots)
+
+## Overview
+
 -  CLI tool that displays directory structure of a specified path in tree-like format, similar to the `tree` Unix command.
 - Allows customized output by ignoring certain files and directories (see `.rrignore` file!).
 - Supports colorized output (file-type-based coloring, tree depth gradients, etc.).
