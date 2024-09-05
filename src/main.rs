@@ -22,26 +22,27 @@ fn main() {
                 .help("Ignore files and directories as specified in {$path}/.rrignore"),
         )
         .arg(
-            Arg::new("no-color")
-                .long("no-color")
+            Arg::new("fast-print")
+                .short('f')
+                .long("fast-print")
                 .action(clap::ArgAction::SetTrue)
-                .help("Do not stylize tree text output"),
+                .help("Print directory on the fly without pre-calculation"),
         )
         .get_matches();
 
     let input_path = matches.get_one::<String>("path");
     let ignore = matches.get_flag("ignore");
-    let color = !matches.get_flag("no-color");
+    let fp = matches.get_flag("fast-print");
     let target_path = match input_path {
         Some(s) => Path::new(s),
         None => Path::new("."),
     };
 
-    if color {
-        let dir = Directory::new(target_path, ignore).unwrap();
-        dir.print_body().unwrap();
-    } else {
+    if fp {
         let dir = Directory::new_with_empty_body(target_path, ignore).unwrap();
         dir.fast_print_body().unwrap();
+    } else {
+        let dir = Directory::new(target_path, ignore).unwrap();
+        dir.print_body().unwrap();
     }
 }

@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 use globset::GlobSet;
 
 use crate::ignore::load_ignore_patterns;
-use crate::text_fmt::{color_branch, color_path, get_path_end};
+use crate::text_fmt::{color_branch, color_path};
 
 type DirectoryBody = HashMap<PathBuf, Vec<PathBuf>>;
 
@@ -166,7 +166,7 @@ impl Directory {
             }
         }
         print!("{}", pos);
-        print!("{}", get_path_end(cur));
+        print!("{}", color_path(cur));
 
         // update wall list for next call (add to stack)
         wall_list.push(pos != LAST_CHILD);
