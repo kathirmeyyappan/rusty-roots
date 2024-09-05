@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# testing no flags vs --no-color (fast print) outputs
+# testing no flags vs --fast-print outputs
 
 # vars
 test_dir="test_tree"
@@ -36,7 +36,7 @@ touch $test_dir/subdir4/subsubdir7/file16.txt
 # run expected and observed
 mkdir $test_output_dir
 ../target/release/rusty-roots -p $test_dir > $test_output_dir/og_output.txt
-../target/release/rusty-roots --no-color -p $test_dir > $test_output_dir/no_color_output.txt
+../target/release/rusty-roots --fast-print -p $test_dir > $test_output_dir/no_color_output.txt
 
 # compare
 diff $test_output_dir/og_output.txt $test_output_dir/no_color_output.txt
