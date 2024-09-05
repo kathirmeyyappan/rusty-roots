@@ -39,11 +39,11 @@ rusty-roots
 Usage: rusty-roots [OPTIONS]
 
 Options:
-  -p, --path <PATH>     Path to get tree from
-  -i, --ignore          Ignore files and directories as specified in {$path}/.rrignore
-      --no-color        Do not stylize tree text output
-  -h, --help            Print help
-  -V, --version         Print version
+  -p, --path <PATH>  Path to get tree from
+  -i, --ignore       Ignore files and directories as specified in {$path}/.rrignore
+  -f, --fast-print   Print directory on the fly without pre-calculation
+  -h, --help         Print help
+  -V, --version      Print version
 ```
 
-*tip: If the program seems to be hanging because the called directory is extremely large, try running with `--no-color`. Pre-calculation for the branch color gradient is not done when this flag is called, so the program will print the tree on-the-fly.* 
+*tip: If the program seems to be hanging because the called directory is extremely large, try running with `-f`. Pre-calculation for the branch color gradient is not done when this flag is called, so the program will be able to print the tree on-the-fly.* 
